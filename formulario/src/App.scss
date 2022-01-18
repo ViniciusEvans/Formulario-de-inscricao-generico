@@ -1,0 +1,43 @@
+@import './mixins.scss';
+.App {
+    position: relative;
+    min-height: 100vh;
+    padding: 7% 10%;
+    @include flexBox();
+    .header {
+        margin-bottom: 100px;
+        min-width: 100vw;
+        height: auto;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 10;
+        background-color: rgb(53, 50, 50);
+        background-image: linear-gradient(rgb(53, 50, 50) 80%, rgb(63, 60, 60));
+        h1 {
+            margin: 0;
+            padding: 20px 30px;
+            color: #ffff;
+        }
+    }
+    form {
+        position: relative;
+        border: 1px rgb(53, 50, 50) solid;
+        width: 500px;
+        .radio-form {
+            @include flexBox($direction: row, $justify: space-between, $align: flex-start, $wrap: wrap);
+            margin: 8px;
+        }
+        .css-1alu61j-MuiButtonBase-root-MuiButton-root:hover {
+            background-color: black;
+            opacity: .9;
+        }
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    form {
+        margin-top: 110px;
+    }
+}
