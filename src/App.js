@@ -4,52 +4,43 @@ import * as Mui from '@mui/material';
 import * as Icons from '@mui/icons-material';
 
 function App() {
-  const [telefone, setTelefone] = useState('');
-  const [nome, setNome] = useState('');
-  const [sobrenome, setSobrenome] = useState('');
-  const [cep, setCep] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [estado, setEstado] = useState('');
-  const [peso, setPeso] = useState('');
-  const [altura, setAltura] = useState('');
-  const [email, setEmail] = useState('');
-  const [cor, setCor] = useState('');
-  const [genero, setGenero] = useState('');
-  const [estado_civil, setEstado_civil] = useState('');
+  const [inputs, setInputs] = useState({
+    nome: '',
+    sobrenome: '',
+    email: '',
+    telefone: '',
+    cidade: '',
+    estado: '',
+    cep: '',
+    estado_civil: '',
+    genero: '',
+    cor: '',
+    peso: '',
+    altura: ''
+  })
 
-  async function fetchData(cep, setCidade, setEstado){
+  async function fetchData(cep, setInputs){
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
     const data = await response.json();
-
-      function fillFields(data, setCity, setState){
-        setState(data.uf)
-        setCity(data.localidade)
+    console.log(data.uf)
+      function fillFields(data, setInputs){
+        setInputs({...inputs, estado: data.uf, cidade: data.localidade})
       }
 
-    fillFields(data, setCidade, setEstado)
+    fillFields(data, setInputs)
   }  
   useEffect(()=>{
-    if(cep.length !== 8) return;
-    fetchData(cep, setCidade, setEstado);
+    if(inputs.cep.length !== 8) return;
+    fetchData(inputs.cep, setInputs);
     
-  }, [cep]);
+  }, [inputs.cep]);
 
   async function handlePost(){
     const body = {
-      nome,
-      sobrenome,
-      email,
-      telefone,
-      cidade,
-      estado,
-      cep,
-      estado_civil,
-      genero,
-      raca: cor,
-      peso,
-      altura
+      ...inputs,
+      raca: inputs.cor,
     }
-
+    console.log(body)
     const response = await fetch('https://database-form.herokuapp.com/formulario',{
       method: "POST",
       headers:{
@@ -62,18 +53,21 @@ function App() {
     setDefault();
   }
   async function setDefault(){
-    setTelefone('');
-    setNome('');
-    setSobrenome('');
-    setCep('');
-    setCidade('');
-    setEstado('');
-    setPeso('');
-    setAltura('');
-    setEmail('');
-    setCor('');
-    setGenero('');
-    setEstado_civil('');
+    const limpo = {
+      nome: '',
+      sobrenome: '',
+      email: '',
+      telefone: '',
+      cidade: '',
+      estado: '',
+      cep: '',
+      estado_civil: '',
+      genero: '',
+      cor: '',
+      peso: '',
+      altura: ''
+    }
+    setInputs(limpo);
   }
 
   function verifyinput(){
@@ -104,24 +98,24 @@ function App() {
             id="standard-required"
             label="Nome"
             variant="standard"
-            value={nome}
-            onChange={e => setNome(e.target.value)}
+            value={inputs.nome}
+            onChange={e => setInputs({...inputs, nome: e.target.value})}
           />
           <Mui.TextField
             required
             id="standard-required"
             label="sobrenome"
             variant="standard"
-            value={sobrenome}
-            onChange={e => setSobrenome(e.target.value)}
+            value={inputs.sobrenome}
+            onChange={e => setInputs({...inputs, sobrenome: e.target.value})}
           />
           <Mui.TextField
             required
             id="standard-required"
             label="E-mail"
             variant="standard"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={inputs.email}
+            onChange={e => setInputs({...inputs, email: e.target.value})}
           />
           <Mui.TextField
             required
@@ -129,32 +123,32 @@ function App() {
             label="Telefone"
             variant="standard"
             type="number"
-            value={telefone}
-            onChange={e => setTelefone(e.target.value)}
+            value={inputs.telefone}
+            onChange={e => setInputs({...inputs, telefone: e.target.value})}
           />
           <Mui.TextField
             required
             id="standard-required"
             label="Cidade"
             variant="standard"
-            value={cidade}
-            onChange={e => setCidade(e.target.value)}
+            value={inputs.cidade}
+            onChange={e => setInputs({...inputs, cidade: e.target.value})}
           />
           <Mui.TextField
             required
             id="standard-required"
             label="Estado"
             variant="standard"
-            value={estado}
-            onChange={e => setEstado(e.target.value)}
+            value={inputs.estado}
+            onChange={e => setInputs({...inputs, estado: e.target.value})}
           />
           <Mui.TextField
             required
             id="standard-required"
             label="Cep"
             variant="standard"
-            value={cep}
-            onChange={e => setCep(e.target.value)}
+            value={inputs.cep}
+            onChange={e => setInputs({...inputs, cep: e.target.value})}
           />
         <div className='radio-form'>
 
@@ -167,8 +161,8 @@ function App() {
                 aria-label="Cor"
                 defaultValue="branco"
                 name="mui.radio-buttons-group"
-                value={cor}
-                onChange={e => setCor(e.target.value)}
+                value={inputs.cor}
+                onChange={e => setInputs({...inputs, cor: e.target.value})}
               >
                 <Mui.FormControlLabel value="branco" control={<Mui.Radio />} label="Branco" />
                 <Mui.FormControlLabel value="preto" control={<Mui.Radio />} label="Preto" />
@@ -188,8 +182,8 @@ function App() {
                 aria-label="genero"
                 defaultValue="mulher"
                 name="mui.radio-buttons-group"
-                value={genero}
-                onChange={e => setGenero(e.target.value)}
+                value={inputs.genero}
+                onChange={e => setInputs({...inputs, genero: e.target.value})}
               >
                 <Mui.FormControlLabel value="feminino" control={<Mui.Radio />} label="Feminino" />
                 <Mui.FormControlLabel value="masculino" control={<Mui.Radio />} label="Masculino" />
@@ -208,8 +202,8 @@ function App() {
                 labelId="marital-status-select-label"
                 id="marital-status-select"
                 label="Estado civil"
-                value={estado_civil}
-                onChange={e => setEstado_civil(e.target.value)}
+                value={inputs.estado_civil}
+                onChange={e => setInputs({...inputs, estado_civil: e.target.value})}
               >
                 <Mui.MenuItem value={'solteiro'}>Solteiro(a)</Mui.MenuItem>
                 <Mui.MenuItem value={'casado'}>Casado(a)</Mui.MenuItem>
@@ -229,8 +223,8 @@ function App() {
               startAdornment: <Mui.InputAdornment position="start">kg</Mui.InputAdornment>,
             }}
             variant="standard"
-            value={peso}
-            onChange={e => setPeso(e.target.value)}
+            value={inputs.peso}
+            onChange={e => setInputs({...inputs, peso: e.target.value})}
             />
         </Mui.Box>
 
@@ -243,8 +237,8 @@ function App() {
             shrink: true,
           }}
           variant="standard"
-          value={altura}
-          onChange={e => setAltura(e.target.value)}
+          value={inputs.altura}
+          onChange={e => setInputs({...inputs, altura: e.target.value})}
           />
         </Mui.Box>
         <Mui.Box  display="flex" alignContent="center" justifyContent="center" >
