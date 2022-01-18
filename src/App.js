@@ -50,7 +50,7 @@ function App() {
       altura
     }
 
-    const response = await fetch('http://localhost:3000/formulario',{
+    const response = await fetch('https://database-form.herokuapp.com/formulario',{
       method: "POST",
       headers:{
           'content-type': 'application/json'
