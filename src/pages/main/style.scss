@@ -1,0 +1,23 @@
+@import "../../mixins.scss";
+.App {
+    @include flexBox();
+    form {
+        scale: 1.3;
+        border: 1px rgb(53, 50, 50) solid;
+        width: 70rem;
+        .radio-form {
+            @include flexBox( $direction: row, $justify: space-between, $align: flex-start, $wrap: wrap);
+            margin: 0.8rem;
+        }
+        .css-1a8eayv-MuiButtonBase-root-MuiButton-root:hover {
+            background-color: black;
+            opacity: 0.7;
+        }
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    form {
+        margin-top: 110px;
+    }
+}

@@ -1,0 +1,24 @@
+.Form-section {
+    width: 90%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    .formularios {
+        width: 50rem;
+        background-color: white;
+        color: black;
+        padding: 3rem;
+        .Title-form {
+            margin: 5rem 0;
+        }
+        .form-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 0.5rem;
+            border: 0.1rem black solid;
+            margin-bottom: 0.8rem;
+        }
+    }
+}
