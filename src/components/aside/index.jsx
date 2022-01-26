@@ -1,10 +1,10 @@
-import "./style.scss";
-import { Outlet, NavLink } from "react-router-dom";
 import { useContext } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 import Contexto from "../../context/contexto";
+import "./style.scss";
 
 function Aside() {
-  const { date, setDate } = useContext(Contexto);
+  const { date } = useContext(Contexto);
   console.log(date);
   return (
     <div className="main">

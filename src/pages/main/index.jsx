@@ -22,10 +22,9 @@ export default function Main() {
     altura: "",
   });
 
-  async function fetchDate(cep, setInputs) {
+  async function fetchDate() {
     const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
     const data = await response.json();
-    console.log(data.uf);
     function fillFields(data, setInputs) {
       setInputs({ ...inputs, estado: data.uf, cidade: data.localidade });
     }
@@ -34,7 +33,7 @@ export default function Main() {
   }
   useEffect(() => {
     if (inputs.cep.length !== 8) return;
-    fetchDate(inputs.cep, setInputs);
+    fetchDate();
   }, [inputs.cep]);
 
   async function handlePost() {
@@ -53,7 +52,7 @@ export default function Main() {
         body: JSON.stringify(body),
       }
     );
-    const data = await response.json();
+    
     fetchData();
     setDefault();
   }
