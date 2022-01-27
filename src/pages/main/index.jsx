@@ -278,6 +278,10 @@ export default function Main() {
               backgroundColor: "black",
               marginTop: "1rem",
               padding: "1rem 25%",
+              "&:hover": {
+                backgroundColor: "black",
+                opacity: '0.7'
+              }
             }}
           >
             <span>Send</span>
