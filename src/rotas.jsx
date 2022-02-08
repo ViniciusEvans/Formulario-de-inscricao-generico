@@ -27,7 +27,6 @@ function Rotas() {
   return (
     <Contexto.Provider value={{ date, setDate, fetchData }}>
       <Routes>
-        Route
         <Route path="/form" element={<Aside />}>
           {date.map((element) => {
             return (
